@@ -1,0 +1,49 @@
+name: Deploy 2048 Game to AWS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1 - Checkout your code from GitHub
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2 - Setup Node.js so we can run npm commands
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # Step 3 - Install all dependencies from package.json
+      - name: Install dependencies
+        run: npm install
+
+      # Step 4 - Build the React app into dist/ folder
+      - name: Build project
+        run: npm run build
+
+      # Step 5 - Connect to AWS using your saved secrets
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      # Step 6 - Upload dist/ folder to S3 bucket
+      - name: Deploy to S3
+        run: |
+          aws s3 sync dist/ s3://${{ secrets.S3_BUCKET_NAME }} --delete
+
+      # Step 7 - Clear CloudFront cache so users get latest version
+      - name: Invalidate CloudFront cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
+            --paths "/*"
