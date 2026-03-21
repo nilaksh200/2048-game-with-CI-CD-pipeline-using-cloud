@@ -12,11 +12,11 @@ jobs:
     steps:
       # Step 1 - Checkout your code from GitHub
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # Step 2 - Setup Node.js so we can run npm commands
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 20
 
