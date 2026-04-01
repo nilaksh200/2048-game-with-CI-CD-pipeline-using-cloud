@@ -142,7 +142,7 @@ export default function App() {
           2048
         </h1>
         <p style={{ fontFamily: "'VT323', monospace", fontSize: "18px", color: "#8a5030", marginBottom: "4px", letterSpacing: "2px" }}>
-          JOIN THE TILES!
+          JOIN THE TILES!!!
         </p>
 
         <ScoreBoard score={score} bestScore={bestScore} phaseName={phase.name} phaseColor={phase.labelColor} />
