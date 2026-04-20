@@ -127,4 +127,4 @@ npm run build   # production build → dist/
 
 ## Author
 
-Nilaksh — [github.com/Nilaksh20](https://github.com/Nilaksh20)
+Nilaksh — [github.com/nilaksh200](https://github.com/nilaksh200)
